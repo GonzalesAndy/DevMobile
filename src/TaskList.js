@@ -1,24 +1,38 @@
 import React, { Component } from "react";
+import LocalStorage from "./LocalStorage";
 
 class TaskList extends Component {
-    render() {
-        return (
-            <div className=" pt-20 ">
-                <ul className="flex flex-col bg-gray-200">
-                    <li className="flex flex-row items-center h-10">
-                        <input type="checkbox" className="h-5 w-5" />
-                        <p className="text-lg ml-5">Tache 1</p>
-                    </li>
-                    <li className="flex flex-row items-center h-10">
-                        <input type="checkbox" className="h-5 w-5" />
-                        <p className="text-lg ml-5">Tache 2</p>
-                    </li>
-                    <li className="flex flex-row items-center h-10">
-                        <input type="checkbox" className="h-5 w-5" />
-                        <p className="text-lg ml-5">Tache 3</p>
-                    </li>
-                </ul>
+    constructor(props) {
+        const localStorage = new LocalStorage();
+        super(props);
+        this.state = {
+            tasks: localStorage.getTasks(),
+        };
+        this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+    }
 
+    handleCheckboxChange(event, index) {
+        const { checked } = event.target;
+        const { tasks } = this.state;
+        const updatedTasks = [...tasks];
+        updatedTasks[index].isChecked = checked;
+        this.setState({ tasks: updatedTasks });
+        const localStorage = new LocalStorage();
+        localStorage.saveTasks(updatedTasks);
+    }
+
+    render() {
+        const { tasks } = this.state;
+        const taskList = tasks.map((task, index) => (
+            <li className=" text-left bg-neutral-500 m-2 p-1 pl-4 border border-2 border-black rounded-xl" key={index}>
+                <input  type="checkbox" checked={task.isChecked} onChange={(event) => this.handleCheckboxChange(event, index)} />
+                <span className="pl-2">{task.title}</span>
+            </li>
+        ));
+
+        return (
+            <div className="flex flex-col  h-full w-full">
+                <ul className="text-white bg-neutral-600 border border-2 border-black rounded-xl m-1 mt-10 p-1">{taskList}</ul>
             </div>
         );
     }
