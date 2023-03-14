@@ -23,6 +23,12 @@ class LocalStorage {
         this.tasks.splice(task, 1);
     }
 
+    swapTasks(task1, task2) {
+        const temp = this.tasks[task1];
+        this.tasks[task1] = this.tasks[task2];
+        this.tasks[task2] = temp;
+    }
+
     saveTasks(tasks) {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }
