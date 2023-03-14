@@ -15,9 +15,7 @@ class TaskList extends Component {
         const { checked } = event.target;
         const localStorage = new LocalStorage();
         const tasks = localStorage.getTasks();
-        const { title } = tasks[index];
         const newIndex = tasks.findIndex(task => task.title === changedTaskTitle);
-
         const updatedTasks = [...tasks];
         updatedTasks[newIndex].isChecked = checked;
         localStorage.saveTasks(updatedTasks);
@@ -25,10 +23,7 @@ class TaskList extends Component {
     
         const checkedTasksCount = updatedTasks.filter((task) => task.isChecked).length;
         this.props.updateCheckedTasks(Math.round(checkedTasksCount/updatedTasks.length*100));
-        console.log(changedTaskTitle);
     }
-    
-      
 
     render() {
         const { tasks } = this.state;
@@ -41,13 +36,11 @@ class TaskList extends Component {
             <li className=" text-left bg-neutral-500 m-2 p-1 pl-4 border border-2 border-black rounded-xl" key={index}>
                 <input  type="checkbox" checked={task.isChecked} onChange={(event) => this.handleCheckboxChange(event, index, task.title)} />
                 <span className="pl-2">{task.title}</span>
-
-
             </li>
         ));
         if (taskList.length === 0) {
             return (
-                <div class="mt-5 rounded-lg bg-red-100 py-5 px-6 text-bold text-red-700">
+                <div class="mt-5 rounded-lg bg-red-100 m-2 py-5 px-6 text-bold text-red-700">
                     Aucune tâche n'a été trouvé !
                 </div>
             )
