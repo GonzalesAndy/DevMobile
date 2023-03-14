@@ -19,6 +19,10 @@ class TaskList extends Component {
         this.setState({ tasks: updatedTasks });
         const localStorage = new LocalStorage();
         localStorage.saveTasks(updatedTasks);
+
+        
+        const checkedTasksCount = updatedTasks.filter((task) => task.isChecked).length;
+        this.props.updateCheckedTasks(Math.round(checkedTasksCount/updatedTasks.length*100));
     }
 
     render() {
