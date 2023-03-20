@@ -21,10 +21,15 @@ class AddTaskModal extends Component {
 
   handleAddTask() {
     const tasks = [...this.state.tasks];
+    //check if already exists
+    const taskExists = tasks.find(task => task.title === this.state.taskName);
+    if (taskExists) {
+      alert("Cette tâche existe déjà");
+      return;
+    }
     tasks.push({ title: this.state.taskName, isChecked: false });
     const localStorage = new LocalStorage();
     localStorage.saveTasks(tasks);
-    //re render task List
     this.setState({ tasks: tasks });
     this.props.onClose();
     window.location.reload();
