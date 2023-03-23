@@ -105,7 +105,7 @@ class TaskList extends Component {
         return (
             
             <div className="flex flex-col  h-full w-full">
-                <ul className="max-h-[550px] overflow-scroll text-white bg-neutral-600 border border-2 border-black rounded-xl m-1 mt-10 p-1">{taskList}</ul>
+                <ul className="max-h-[550px] overflow-scroll overflow-x-hidden overflow-y-auto text-white bg-neutral-600 border border-2 border-black rounded-xl m-1 mt-10 p-1">{taskList}</ul>
             </div>
         );
     }
